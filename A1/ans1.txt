@@ -1,0 +1,137 @@
+Name: Quentin Truong
+Assignment 1. Getting to know your system
+
+---
+
+Laboratory: Linux and Emacs scavenger hunt
+1. How can you get man to print all the commands that have a specific word in 
+their man page (or at least the description part of the man page)? (hint: man 
+man)
+2. Where are the cp and wc programs located in the file system?
+3. What executable programs have names that are just one character long, and 
+what do they do?
+4. When you execute the command named by the symbolic link /usr/bin/emacs, 
+which file actually is executed?
+5. The chmod program changes permissions on a file. What does the symbolic 
+mode g+s,o-x mean, in terms of permissions?
+6. What option to find lets you search for files that have been modified in 
+the last three weeks?
+7. Use the previous answer to find all directories modified in the last three 
+weeks.
+8. Of the files in the same directory as find, how many of them are symbolic 
+links?
+9. What is the oldest regular file in the /usr/lib directory?
+10. Where does the locale command get its data from?
+11. In Emacs, what commands have sort in their name?
+12. Briefly, what do the Emacs keystrokes C-M-a through C-M-h do? Can you list 
+their actions concisely?
+13. In more detail, what does the Emacs keystroke C-g do?
+14. What does the Emacs yank function do?
+15. When looking at the directory /usr/bin, what's the difference between the 
+output of the ls -l command, and the directory listing of the Emacs dired 
+command?
+
+1A. 
+man -k <specific_word>
+Found by reading the manual for man
+
+2A. 
+/usr/bin/cp /usr/bin/wc
+Found by using which cp, which wc
+
+3A. 
+w : display who is logged in and what they are doing
+These others also come up, but they aren't really true executable programs 
+like 'w' is
+{ : generate strings
+} : generate strings
+! : rerun previous/part of cmd
+. : execute commands from filename argument from current shell
+: : equivalent to true cmd
+[ : condition evaluation utility
+X : a portable, network-transparent window system
+Found by running
+list=$(compgen -c)
+for name in $list; do if [ ${#name} -eq 1 ]; then echo $name; fi; done
+
+4A.
+/etc/alternatives/emacs
+Found by 
+ls /usr/bin -l
+
+5A.
+g+s: sets group id on execution
+o-x: removes execution permission for others
+Found by reading manual for chmod
+
+6A.
+-mtime -21
+Found by reading manual for find
+
+7A.
+Okay I did that.
+find / -type d -mtime -21
+Found by reading manual for find
+
+8A.
+293
+Found by
+list=($(find /usr/bin -type l)) 
+echo ${#list[@]}
+
+9A.
+libgpg-error.so.0.10.0
+Found by reading last output line from
+ls /usr/lib -lt
+
+10A.
+localedef defines locale environment
+Found by using man -k locale
+
+11A.
+Buffer-menu-sort
+sort-columns
+sort-fields
+sort-lines
+sort-numeric-fields
+sort-pages
+sort-paragraphs
+sort-regexp-fields
+tabulated-list-col-sort
+tabulated-list-sort   
+Found by running this cmd in emacs
+C-h a sort Enter C-x 0
+
+12A.
+C-M-a           beginning-of-defun
+C-M-b           backward-sexp
+C-M-c           exit-recursive-edit
+C-M-d           down-list
+C-M-e           end-of-defun
+C-M-f           forward-sexp
+C-m-g           <DNE>
+C-M-h           mark-defun
+Found by using
+C-h ? b C-x 0 C-s C-M-a
+
+13A.
+C-g             keyboard-quit
+it cancels current cmd
+Found by using 
+C-h ? b C-x 0 C-s C-g
+
+14A.
+Emac's yank is bound to C-y and inserts previously killed text
+
+15A.
+drwxr-xr-x  1067 root   wheel      36278 Aug  7 15:24 .
+drwxr-xr-x@   11 root   wheel        374 Feb 18  2017 ..
+Are the only content differences
+Found by
+C-x d Backspace Backsapce /usr/bin C-x h M-w C-x C-f Backspace Backspace 
+Backspace Backspace Backspace Backspace Backspace Backspace Backspace ~/
+desktop/2.txt C-y C-x C-s
+ls -l /usr/bin > ~/desktop/1.txt
+and using compare programs
+
+---

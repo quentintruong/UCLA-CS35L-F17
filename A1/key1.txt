@@ -1,0 +1,317 @@
+Name: Quentin Truong
+Assignment 1. Getting to know your system
+
+---
+
+To start,
+1. download a copy of the web page you're looking at into a file named 
+assign1.html. You can do this with Wget or curl. 
+2. Use cp to make three copies of this file. Call the copies exer1.html, 
+exer2.html, and exer3.html.
+
+1A. 
+c u r l SP h t t p : / / w e b . c s . u c l a . e d u / c l a s s e s / f a l 
+l 1 7 / c s 3 5 L / a s s i g n / a s s i g n 1 . h t m l SP - o SP a s s i g 
+n 1 . h t m l
+
+2A. 
+c p SP a s s i g n 1 . h t m l SP e x e r 1 . h t m l
+c p SP a s s i g n 1 . h t m l SP e x e r 2 . h t m l
+c p SP a s s i g n 1 . h t m l SP e x e r 3 . h t m l
+
+---
+
+Exercise 1.1: Moving around in Emacs
+1. Use Emacs to edit the file exer1.html.
+2. Move the cursor to just after the first occurrence of the word "PUBLIC".
+3. Now move the cursor to the start of the first later occurrence of the word 
+"Laboratory".
+4. Now move the cursor to the start of the first later occurrence of the word 
+"self-referential".
+5. Now move the cursor to the start of the first later occurrence of the word 
+"arrow".
+6. Now move the cursor to the end of the current line.
+7. Now move the cursor to the beginning of the current line.
+8. Doing the above tasks with the arrow keys takes many keystrokes, or it 
+involves holding down keys for a long time. Can you think of a way to do it 
+with fewer keystrokes by using some of the commands available in Emacs?
+9. Did you move the cursor using the arrow keys? If so, repeat the above 
+steps, without using the arrow keys.
+10. When you are done, exit Emacs.
+
+1A. 
+e m a c s SP e x e r 1 . h t m l
+
+2A. 
+C-s P U B L I C Enter
+
+3A.
+C-s L a b o r a t o r y Enter
+
+4A.
+C-s s e l f - r e f e r e n t i a l Enter
+
+5A.
+C-s a r r o w Enter
+
+6A.
+C-e
+
+7A.
+C-a
+
+8A.
+Yes
+
+9A. 
+No
+
+10A.
+C-x C-c
+
+---
+
+Exercise 1.2: Deleting text in Emacs
+1. Use Emacs to edit the file exer2.html. The idea is to delete its HTML 
+comments; the resulting page should display the same text as the original.
+2. Delete the 18th line, which is an HTML comment. <!-- HTML comments look 
+like this. -->
+3. Delete the HTML comment containing the text "DELETEME DELETEME DELETEME".
+4. Delete the HTML comment containing the text "https://en.wikipedia.org/wiki/
+HTML_comment#Comments".
+5. There are two more HTML comments; delete them too.
+
+1A.
+e m a c s SP e x e r 2 . h t m l
+
+2A.
+M-g g 1 8 C-k
+
+3A.
+C-s D E L E T E M E C-a C-k
+
+4A.
+C-s < ! - C-a M-k C-n M-k
+
+5A.
+C-M-s < ! - - - - > Enter Backspace Backspace Backspace Backspace Backspace 
+Backspace Backspace C-M-s < ! - - . + - - > C-a C-k
+
+---
+
+Exercise 1.3: Inserting text in Emacs
+
+1. Use Emacs to edit the file exer3.html.
+2. Change the first two instances of "Assignment 1" to "Assignment 37".
+3. Change the first instance of "UTF-8" to "US-ASCII".
+4. Insert a blank line before the first line containing "</ol>".
+5. When you finish, save the text file and exit Emacs. As before, use the diff 
+command to check your work.
+
+1A.
+e m a c s SP e x e r 3 . h t m l
+
+2A.
+C-s A s s i g n m e n t Sp 1 Enter Backspace 3 7 C-s A s s i g n m e n t Sp 1 
+Enter Backspace 3 7
+
+3A.
+M-< M-del M-del U S - A S C I I
+
+4A.
+M-< C-s </ol> Enter C-a Enter
+
+5A.
+C-x C-s y e s
+d i f f SP - u SP e x e r 1 . h t m l SP e x e r 3 . h t m l SP > SP e x e r 3 
+. d i f f
+
+---
+
+Exercise 1.4: Other editing tasks in Emacs
+
+1. Execute the command "cat exer2.html exer2.diff >exer4.html" to create a 
+file exer4.html that contains a copy of exer2.html followed by a copy of 
+exer2.diff.
+2. Use Emacs to edit the file exer4.html. The idea is to edit the file so that 
+it looks identical to exer1.html on a browser, but the file itself is a little 
+bit different internally.
+3. Go to the end of the file. Copy the new lines in the last chunk of diff 
+output, and paste them into the correct location earlier in the file.
+4. Repeat the process, until the earlier part of the file is identical to what 
+was in the original.
+5. Delete the last part of the file, which contains the diff output.
+6. … except we didn't really want to do that, so undo the deletion.
+7. Turn the diff output into a comment, by surrounding it with "<!--" and 
+"-->".
+8. Now let's try some search and replaces. Search the text document for the 
+pattern "<ol>". How many instances did you find? Use the search and replace 
+function to replace them all with the initial-caps equivalent "<Ol>".
+9. Check your work with viewing exer4.html with an HTML browser, and by 
+running the shell command "diff -u exer1.html exer4.html >exer4.diff". The 
+only differences should be changes from "<ol>" to "<Ol>", and a long HTML 
+comment at the end.
+
+1A.
+cat exer2.html exer2.diff > exer4.html
+
+2A.
+emacs exer4.html
+
+3/4A.
+M-> C-M-r <!-- Enter C-k M-g g 3 5 4 C-y
+M-> C-M-r <!-- Enter C-@ C-f C-f C-f C-f C-f C-f C-f C-w M-g g 339 C-e C-b C-b 
+C-b C-b C-b C-y
+M-> C-M-r <!-- Enter C-@ C-n C-n C-e C-w M-g g 303 C-y C-a C-f Backspace C-p 
+C-f Backspace
+M-> C-M-r <!-- Enter C-@ C-e C-w M-g g 93 C-y
+M-> C-M-r <!-- Enter C-@ C-e C-w M-g g 18 C-y
+
+5A.
+M-> C-M-r --- Enter C-@ M-> Backspace
+
+6A.
+C-x u
+
+7A.
+--> C-M-R --- Enter Enter C-p <!--
+
+
+8A.
+M-< M-% <ol> <OL> y y y y y y y
+7
+
+9A.
+d i f f SP - u SP e x e r 1 . h t m l SP e x e r 4 . h t m l SP > SP e x e r 4 
+. d i f f
+
+---
+
+Exercise 1.5: Doing commands in Emacs
+
+1. Create a new directory named "junk" that's right under your home directory.
+2. In that directory, create a C source file hello.c that contains the 
+following text. Take care to get the text exactly right, with no trailing 
+spaces or empty lines, with the initial # in the leftmost column of the first 
+line, and with all other lines indented to match exactly as shown:
+#include <stdio.h>
+int
+main (void)
+{
+  char n = '\n';
+  char b = '\\';
+  char q = '"';
+  char const *p = "#include <stdio.h>%cint%cmain (void)%c{%c  char n = 
+  '%cn';%c  char b = '%c%c';%c  char q = '%c';%c  char const *p = %c%s%c;%c  
+  printf (p, n, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);%c  return 
+  0;%c}%c";
+  printf (p, n, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);
+  return 0;
+}
+3. Compile this file, using the Emacs M-x compile command.
+4. Run the compiled program, and put its output into a new Emacs buffer named 
+hello-out.
+5. Copy this buffer's contents directly into the log that you're maintaining 
+for this exercise. (You are using Emacs to maintain the log, aren't you?)
+
+1A.
+M-x m k d i r Enter j u n k Enter
+
+2A.
+M-x c d Enter j u n k Enter C-x C-f h e l l o . c Enter 
+copy/paste
+C-x C-s
+
+3A.
+M-x c o m p i l e Enter M-Backspace M-Backspace 
+g c c SP - o SP h e l l o SP h e l l o . c
+
+4A.
+M-! . / h e l l o Enter C-x 0 M-x r e n a m e - b u f f e r Enter h e l l o - 
+o u t Enter
+
+5A.
+#include <stdio.h>
+int
+main (void)
+{
+  char n = '\n';
+  char b = '\\';
+  char q = '"';
+  char const *p = "#include <stdio.h>%cint%cmain (void)%c{%c  char n = 
+  '%cn';%c\
+  char b = '%c%c';%c  char q = '%c';%c  char const *p = %c%s%c;%c  printf (p, 
+  n\
+, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);%c  return 0;%c}%c";
+  printf (p, n, n, n, n, b, n, b, b, n, q, n, q, p, q, n, n, n, n);
+  return 0;
+}
+C-@ M-> C-w C-x C-f M-Backspace k e y 1 . t x t Enter M-> C-y C-x C-s
+
+---
+
+Exercise 1.6: Running Elisp code
+
+1. Visit Emacs's *scratch* buffer.
+2. In the buffer, compute a random integer by invoking the random function. 
+Use C-j (eval-print-last-sexp) to invoke the random function.
+3. In the buffer, assign two random integers to the global variables x and y. 
+You can start by executing (setq x (random)). Again, use C-j.
+4. What is the product of the two variables? You can find this out by 
+executing (* x y). What do you observe about the result? If the answer is the 
+correct mathematical answer, keep trying again with a different pair of random 
+integers until you get an answer that is not mathematically correct.
+5. Try evaluating (* x y) again, but this time with M-: (eval-expression). 
+What difference do you observe in the output?
+6. Are the two random integers truly random in the mathematical sense? If not, 
+what's not random about them?
+7. Assuming (random) is truly random, what is the probability that the 
+two-variable product mentioned above is mathematically incorrect? Explain how 
+you calculated this.
+
+1A.
+C-x b Enter
+
+2A.
+( r a n d o m ) C-j
+
+3A.
+( s e t q SP x SP ( r a n d o m ) ) C-j
+( s e t q SP y SP ( r a n d o m ) ) C-j
+
+4A.
+( * x y ) C-j
+660226478620032012
+It is not mathematically correct
+
+5A
+M-: ( * x y ) Enter
+The output is also given in octal and hex, and is not printed into the buffer
+
+6A.
+No. 
+They are pseudo-random and so mimic a random series wrt some properties such 
+as equal distribution.
+
+7A.
+M-: m o s t - p o s i t i v e - f i x n u m Enter
+M-: m o s t - n e g a t i  v e - f i x n u m Enter
+[-2305843009213693952, 2305843009213693951]
+The calculated two-variable product will be mathematically incorrect if the 
+true product is out of range. Afaik, it will be correct in all other cases.
+
+neg*neg is same as pos*pos
+pos*neg is same as neg*pos
+pos*neg is similar enough to pos*pos
+So, total percent mathematically incorrect is reflected by percent 
+mathematically incorrect for pos*pos.
+
+[min, max] ~ percent_mathematically_incorrect
+[-16,15] ~ 56
+[-32, 31] ~ 82
+[-64, 63] ~ 94
+[-256, 255] ~ 99
+so, somewhere around 99+% will be incorrect
+
+
+
