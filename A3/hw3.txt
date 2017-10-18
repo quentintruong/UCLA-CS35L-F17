@@ -1,0 +1,50 @@
+Name: Quentin Truong
+Assignment 3. Modifying and rewriting software
+
+---
+
+Laboratory: Installing a small change to a big package
+
+Q1.
+Brady's patch removes the line because it is a goto label that is no longer 
+used. It was not necessary to remove that line because 
+"case_long_iso_time_style:" is a goto and not related to the issue.
+
+Q2.
+It should watch out for users in different countries who do not prefer 
+English-format dates. Also, it may confuse programs written to parse output 
+from the unpatched ls program.
+
+---
+
+Homework: Rewriting a script
+
+Q3.
+The script fails and the following output is caused because the code sets a 
+default numLines=1, which later translates into an expectation that the 
+provided file has lines. So the program crashes due to out-of-range indexing.
+"""
+Traceback (most recent call last):
+  File "randline.py", line 70, in <module>
+    main()
+  File "randline.py", line 64, in main
+    sys.stdout.write(generator.chooseline())
+  File "randline.py", line 34, in chooseline
+    return random.choice(self.lines)
+  File "/usr/lib64/python2.7/random.py", line 274, in choice
+    return seq[int(self.random() * len(seq))]  # raises IndexError if seq is 
+    empty
+IndexError: list index out of range
+"""
+
+Q4.
+The script fails and the following output is caused because python3 has 
+deprecated this form of the except syntax.
+"""
+  File "t.py", line 65
+    except IOError as (errno, strerror):
+                      ^
+SyntaxError: invalid syntax
+"""
+
+---

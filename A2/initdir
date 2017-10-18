@@ -1,0 +1,25 @@
+#!/bin/bash
+mkdir dir
+echo "a" > ./dir/a1.txt
+echo "a" > ./dir/a2.txt
+echo "a" > ./dir/b.txt
+
+echo "diff content" > ./dir/different.txt
+
+echo "slink" > ./dir/slink1.txt
+ln -s ./slink1.txt ./dir/slink2.txt
+
+echo "dot content1" > ./dir/.a
+echo "dot content2" > ./dir/.z
+echo "dot content1" > ./dir/.aa
+echo "dot content1" > ./dir/fake.dot
+
+echo "weirdname" > ./dir/#weirdname.txt
+echo "weirdname" > './dir/*weirdname.txt'
+
+echo "unreadable" > ./dir/noread
+chmod -r ./dir/noread
+
+mkdir dir/dir2
+echo "no" > ./dir/dir2/no.txt
+

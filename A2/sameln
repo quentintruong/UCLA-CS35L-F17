@@ -1,0 +1,42 @@
+#!/bin/bash
+dir=$1
+all_files="$(ls -A $dir | sort)"
+
+dot_files=()
+other_files=()
+
+for file in $all_files
+do
+	if [ -f "./$dir/$file" ] && [ ! -L "./$dir/$file" ];
+	then
+		if [ ! -r "./$dir/$file" ]
+		then	
+			echo "Cannot read ./$dir/$file"
+		else	
+			if [ "${file:0:1}" == "." ]
+			then
+				dot_files+=("./$dir/$file")
+			else	
+				other_files+=("./$dir/$file")
+			fi
+		fi
+	fi
+done
+
+valid_files=("${dot_files[@]}" "${other_files[@]}")
+
+for (( first = 0; first < "${#valid_files[@]}"; first++ ))
+do
+	for (( second = $first+1; second < "${#valid_files[@]}"; second++ ))
+	do
+		if cmp -s "${valid_files[$first]}" "${valid_files[$second]}"
+		then
+			echo "Hardlinking ${valid_files[$first]} ${valid_files[$second]}"
+			ln -f "${valid_files[$first]}" "${valid_files[$second]}"
+				valid_files=("${valid_files[@]:0:$second}" "${valid_files[@]:
+$(($second+1))}")
+			let second--		
+		
+		fi
+	done
+done

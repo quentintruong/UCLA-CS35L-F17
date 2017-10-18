@@ -1,0 +1,122 @@
+Name: Quentin Truong
+Assignment 3. Modifying and rewriting software
+
+---
+
+Laboratory: Installing a small change to a big package
+
+curl ftp://ftp.gnu.org/gnu/coreutils/coreutils-7.6.tar.gz > f.tgz
+tar -xzvf f.tgz
+This downloads and decompresses the file
+
+cd coreutils-7.6
+./configure --prefix=/u/cs/ugrad/quentin/coreutilsInstall
+make
+make install
+This configures the file, makes it, and installs it. There were no problems.
+
+cd /u/cs/ugrad/quentin/coreutilsInstall/bin
+./ls -lA
+This allows you to visually check that the ls program is broken. Typing 
+'locale', we see that we are already in en_US.UTF-8
+
+cd /u/cs/ugrad/quentin/Desktop/coreutils-7.6
+vi patch_file 
+patch -p1 < patch_file
+This allows you to create and apply the patch. Patch content comes from http://
+lists.gnu.org/archive/html/bug-coreutils/2009-09/msg00410.html
+
+make
+"""
+make  all-recursive
+make[1]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6'
+Making all in lib
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+lib'
+make  all-recursive
+make[3]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+lib'
+make[4]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+lib'
+make[4]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+lib'
+make[3]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+lib'
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+lib'
+Making all in src
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+src'
+make  all-am
+make[3]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+src'
+  CC     ls.o
+  CCLD   dir
+  CCLD   vdir
+  CCLD   ls
+make[3]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+src'
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+src'
+Making all in doc
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+doc'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+doc'
+Making all in man
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+man'
+  GEN    dir.1
+  GEN    vdir.1
+  GEN    ls.1
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+man'
+Making all in po
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+po'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+po'
+Making all in tests
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+tests'
+make[2]: Nothing to be done for `all'.
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+tests'
+Making all in gnulib-tests
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+gnulib-tests'
+make  all-recursive
+make[3]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+gnulib-tests'
+make[4]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+gnulib-tests'
+make[4]: Nothing to be done for `all-am'.
+make[4]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+gnulib-tests'
+make[3]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+gnulib-tests'
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6/
+gnulib-tests'
+make[2]: Entering directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6'
+make[2]: Nothing to be done for `all-am'.
+make[2]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6'
+make[1]: Leaving directory `/w/home.15/cs/ugrad/quentin/Desktop/coreutils-7.6'
+"""
+The 'make' command creates this output. Each command executed is necessary, 
+because the 'make' only recompiled the ls program.
+
+touch new_file
+touch old_file
+touch -t 201501010101.00 old_file
+This creates a new and old file
+
+/u/cs/ugrad/quentin/Desktop/coreutils-7.6/src/ls -lA
+This allows you to visually check that the patched ls program works as 
+expected.
+
+/u/cs/ugrad/quentin/coreutilsInstall/bin/ls -lA
+This allows you to visually check that the unpatched ls program does not work.
+
+---
