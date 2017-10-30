@@ -1,0 +1,245 @@
+Name: Quentin Truong
+Assignment 2. Shell scripting
+
+---
+
+Laboratory: Spell-checking Hawaiian
+
+locale
+Checks current locale
+
+export LC_ALL='C'
+Changes locale to 'C'
+
+tr 'A-Z' 'a-z' < /usr/share/dict/words | sort > words
+This lowercases all the words and stores the sorted output into a file named 
+words.
+
+curl http://web.cs.ucla.edu/classes/fall17/cs35L/assign/assign2.html > 
+assign2.txt
+This copies the content of the webpage into a txt file
+
+tr -c 'A-Za-z' '[\n*]' < assign2.txt
+This outputs every alphabetic character found in the file and a newline in 
+place of every non-alphabetic character found in the file. The '* after the 
+'\n' signals to repeat '\n' for the length of SET1 replacement.
+
+tr -cs 'A-Za-z' '[\n*]' < assign2.txt
+This differs from the prior command in that it outputs only a single newline 
+per non-alphabetic character. This is due to the -s option, which replaces 
+sequences of characters with a single character.
+
+tr -cs 'A-Za-z' '[\n*]' < assign2.txt | sort
+This differs from the prior command in that it sorts the output text. This is 
+because the output from 'tr -cs 'A-Za-z' '[\n*]' < assign2.txt' is piped into 
+the sort command using '|'.
+
+tr -cs 'A-Za-z' '[\n*]' < assign2.txt | sort -u
+This differs from the prior command in that it removes duplicates from the 
+output text. This is because of the -u option, which stands for "unique" and 
+removes duplicates.
+
+tr -cs 'A-Za-z' '[\n*]' < assign2.txt | sort -u | comm - words 
+This differs from the prior command in that it compares the output from the 
+prior command with the content of the word file. It produces three columns, 
+column one contains lines unique to the output, column two contains lines 
+unique to the word file, and column three contains lines common to both files. 
+The '-' option tells it to use stdin as FILE1.
+
+tr -cs 'A-Za-z' '[\n*]' < assign2.txt | sort -u | comm -23 - words
+This differs from the prior command in that it suppresses columns 2 and 3, so 
+we only see the words unique to assign2.txt.
+
+#!/bin/bash
+grep -E "<td>.+</td>" - | sed -n 0~2p | sed -r "s/<.{1,3}>//g" | sed "s/    //
+g" 
+| sed "s/,//g" | tr "A-Z\` " "a-z\'\n" | grep -Ex "[pk'mnwlhaeiou]+" | sort -u
+The above line command is the content of buildwords.sh. AFAIK, the script does 
+all the work and does not have bugs. 
+
+grep -E "<td>.+</td>" - | 
+This extracts any text matching the specified extended-regex (-E) pattern from 
+stdin (-) and pipes it to the following command (|).
+
+sed -n 0~2p | 
+This extracts every 2nd line, starting with the 0th line and pipes it to the 
+following command (|).
+
+sed -r "s/<.{1,3}>//g" | 
+This replaces (s//) any text (g) matching the extended-regex (-r) pattern and 
+pipes it to the following command (|).
+
+sed "s/    //g" | 
+This replaces (s//) any text (g) matching the regex pattern and pipes it to 
+the following command (|).
+
+sed "s/,//g" | 
+This replaces (s//) any text (g) matching the regex pattern and pipes it to 
+the following command (|).
+
+tr "A-Z\` " "a-z\'\n" | 
+This replaces 'A' with 'a', 'B' with 'b', ..., ' ' with '\n' and pipes it to 
+the following command (|).
+
+grep -Ex "[pk'mnwlhaeiou]+" | 
+This extracts lines fully matching (-x) the specified extended-regex (-E) 
+pattern and pipes it to the following command (|).
+
+sort -u
+This sorts, removes duplicates (-u), and prints it to stout.
+
+cat hwnwdseng.htm | ./buildwords > hwords
+Before running this command, remember to 'chmod +x buildwords.sh' to change 
+permissions for execution. This line creates uses the bash script to create 
+hwords. 
+
+tr 'A-Z' 'a-z' < assign2.txt | tr -cs 'a-z' '[\n*]' | sort -u | comm -23 - 
+words | wc -l
+This lowercases alphabetic characters from assign2.txt, removes non-alphabetic 
+characters, splits words into lines, sorts, removes duplicates, compares 
+against the english dictionary, and counts the words that are in assign2.txt 
+but not in the dictionary.
+There are 33 'misspelled' english words.
+
+tr 'A-Z' 'a-z' < assign2.txt | tr -cs "pk\'mnwlhaeiou" '[\n*]' | sort -u |
+ comm -23 - hwords | wc -l
+This lowercases alphabetic characters from assign2.txt, removes non-hawaiian 
+characters, splits words into lines, sorts, removes duplicates, compares 
+against the hawaiian dictionary, and counts the words that are in assign2.txt 
+but not in the dictionary.
+There are 198 'misspelled' hawaiian words.
+
+tr 'A-Z' 'a-z' < assign2.txt | tr -cs 'a-z' '[\n*]' | sort -u | comm -23 - 
+words | comm -12 - hwords
+This finds 'misspelled' english words that are in the hawaiian dictionary.
+Yes there are words that are 'misspelled' in english but not as hawaiian.
+halau
+wiki
+
+tr 'A-Z' 'a-z' < assign2.txt | tr -cs "pk\'mnwlhaeiou" '[\n*]' | sort -u |
+ comm -23 - hwords | comm -12 - words
+This finds 'misspelled' hawaiian words that are in the english dictionary. 
+Yes there are words that are 'misspelled' in hawaiian but not as english.
+ail
+ain
+ake
+al
+ale
+alen
+ali
+all
+amine
+amp
+ample
+an
+aph
+api
+apo
+awk
+ea
+ee
+ein
+el
+em
+ema
+emp
+en
+ene
+ep
+epa
+ewo
+h
+ha
+han
+hap
+hawaiian
+he
+hei
+hell
+hem
+hen
+hi
+hin
+ho
+howe
+ia
+ie
+ii
+ile
+imp
+in
+ina
+ion
+iona
+ione
+iou
+ip
+k
+keep
+kin
+l
+lan
+le
+lea
+lem
+len
+li
+like
+line
+link
+ln
+lo
+lowe
+m
+m'
+mail
+men
+mi
+ml
+mo
+mp
+n
+ne
+nee
+non
+nu
+num
+o
+om
+ome
+omm
+on
+one
+oo
+op
+ope
+open
+ou
+own
+p
+paul
+pe
+pell
+people
+plea
+pu
+u
+ui
+uil
+ul
+ula
+ule
+ume
+ump
+un
+uni
+w
+wa
+wan
+we
+wh
+wha
+wi
+wo
+
+---

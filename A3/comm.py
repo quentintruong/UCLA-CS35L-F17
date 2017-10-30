@@ -3,7 +3,6 @@
 #
 # comm.py
 
-import fileinput
 import random, sys
 from optparse import OptionParser
 
@@ -16,14 +15,20 @@ def parse_options():
 
     return parser.parse_args(sys.argv[1:])
 
-def read_files(file_inputs):
+def read_files(file_names):
     file_contents = [[], []]
-    file_num = -1
+    file_num = 0
 
-    for line in file_inputs:
-        if fileinput.isfirstline():
+    for file_name in file_names:
+        if file_name == '-':
+            for line in sys.stdin.read().splitlines():
+                file_contents[file_num].append(line.rstrip())
             file_num += 1
-        file_contents[file_num].append(line.rstrip())
+        else:
+            with open(file_name) as file:
+                for line in file.readlines():
+                    file_contents[file_num].append(line.rstrip())
+                file_num += 1
 
     return file_contents
 
@@ -35,40 +40,65 @@ def check_files(file_contents):
     return True
 
 def compare_files_sort(file_contents, options):
-    tabs = ''
+    tab2 = ''
+    tab3 = ''
+    if options.print1:
+        tab2 += '\t'
+        tab3 += '\t'
+    if options.print2:
+        tab3 += '\t'
 
+    other = file_contents[1][:]
+    col1, col2, col3 = [], [], []
     for line in file_contents[0]:
-        if line not in set(file_contents[1]) and options.print1:
+        if line in other:
+            other.remove(line)
+            print('{}{}'.format(tab3, line))
+        else:
             print(line)
-        elif line in set(file_contents[1]) and options.print3:
-            print('\t\t{}'.format(line))
+
+    other = file_contents[0][:]
     for line in file_contents[1]:
-        if line not in set(file_contents[0]) and options.print2:
-            print('\t{}'.format(line))
+        if line in other:
+            other.remove(line)
+        else:
+            print('{}{}'.format(tab2, line))
 
 def compare_files(file_contents, options):
-    tabs = ''
-
-    col1, col2, col3 = {}, {}, {}
+    tab2 = ''
+    tab3 = ''
     if options.print1:
-        col1 = {"{}".format(line): line for line in file_contents[0] if line not in set(file_contents[1])}
-        tabs += '\t'
-
+        tab2 += '\t'
+        tab3 += '\t'
     if options.print2:
-        col2 = {"{}{}".format(tabs, line): line for line in file_contents[1] if line not in set(file_contents[0])}
-        tabs += '\t'
+        tab3 += '\t'
 
+    other = file_contents[1][:]
+    col1, col2, col3 = [], [], []
+    for line in file_contents[0]:
+        if line in other:
+            other.remove(line)
+            col3.append((line, '{}{}'.format(tab3, line)))
+        else:
+            col1.append((line, line))
+
+    other = file_contents[0][:]
+    for line in file_contents[1]:
+        if line in other:
+            other.remove(line)
+        else:
+            col2.append((line, '{}{}'.format(tab2, line)))
+    
+    out = []
+    if options.print2:
+        out += col2
     if options.print3:
-        col3 = {"{}{}".format(tabs, line): line for line in file_contents[0] if line in set(file_contents[1])}
-
-    output = col1
-    output.update(col2)
-    output.update(col3)
-
-    output = sorted(output, key=output.__getitem__)
-    for line in output:
-        print(line)
-
+        out += col3
+    if options.print1:
+        out += col1
+    out = sorted(out, key=lambda x : x[0])
+    for tup in out:
+        print(tup[1])
 
 def main():
     options, args = parse_options()
@@ -77,8 +107,7 @@ def main():
         print('Error: Incorrect number of files')
         return
 
-    file_input = fileinput.input(args)
-    file_contents = read_files(file_input)
+    file_contents = read_files(args)
 
     if not check_files(file_contents):
         print('Error: Incorrect number of files')
