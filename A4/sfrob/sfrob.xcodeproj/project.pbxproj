@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B3E72BA51FA4072C00A5F0EA /* sfrob.c in Sources */ = {isa = PBXBuildFile; fileRef = B3E72BA41FA4072C00A5F0EA /* sfrob.c */; };
+		B3BA629A1FAD1C360072EBE3 /* sfrob.c in Sources */ = {isa = PBXBuildFile; fileRef = B3BA62991FAD1C360072EBE3 /* sfrob.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +23,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B3BA62991FAD1C360072EBE3 /* sfrob.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sfrob.c; path = ../../sfrob.c; sourceTree = "<group>"; };
 		B3E72BA11FA4072C00A5F0EA /* sfrob */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sfrob; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3E72BA41FA4072C00A5F0EA /* sfrob.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = sfrob.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 		B3E72BA31FA4072C00A5F0EA /* sfrob */ = {
 			isa = PBXGroup;
 			children = (
-				B3E72BA41FA4072C00A5F0EA /* sfrob.c */,
+				B3BA62991FAD1C360072EBE3 /* sfrob.c */,
 			);
 			path = sfrob;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3E72BA51FA4072C00A5F0EA /* sfrob.c in Sources */,
+				B3BA629A1FAD1C360072EBE3 /* sfrob.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
