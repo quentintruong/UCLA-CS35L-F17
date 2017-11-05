@@ -1,0 +1,14 @@
+./sfrobu < s1
+./sfrobu < s2
+./sfrobu < s3
+./sfrobu < s4
+./sfrobu < s5
+./sfrobu < s6
+./sfrobu < s7
+./sfrobu < s8
+./sfrobu < s9
+./sfrobu < s10
+./sfrobu < s11
+./sfrobu < s12
+./sfrobu < s13
+./sfrobu -f < s13

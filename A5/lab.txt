@@ -1,0 +1,112 @@
+Name: Quentin Truong
+Assignment 5. System call programming and debugging
+
+---
+ 
+Laboratory: Buffered versus unbuffered I/O
+
+1.
+OK
+The program I wrote validates the input args 'from' and 'to'. Then it transliterates the input from stdin using 'from' and 'to'. It uses getchar and putchar.
+
+2.
+OK
+The program I wrote validates the input args 'from' and 'to'. Then it transliterates the input from stdin using 'from' and 'to'. It uses read and write syscalls.
+
+3.
+head --bytes=5000000 /dev/urandom > 5mb.txt
+The above command will create a 5mb file.
+
+3a.
+
+strace -c ./tr2b a b < 5mb.txt > output_tr2b
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+  0.00    0.000000           0         2           read
+  0.00    0.000000           0         1           write
+  0.00    0.000000           0         2           open
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0         4           fstat
+  0.00    0.000000           0         9           mmap
+  0.00    0.000000           0         4           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           brk
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000000                    29         1 total
+
+strace -c ./tr2u a b < 5mb.txt > output_tr2u
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 54.83   21.439982           4   5000000           write
+ 45.17   17.661406           4   5000002           read
+  0.00    0.000038           5         7           mmap
+  0.00    0.000034          17         2           open
+  0.00    0.000027           7         4           mprotect
+  0.00    0.000013          13         1           execve
+  0.00    0.000010          10         1           munmap
+  0.00    0.000007           4         2           close
+  0.00    0.000007           4         2           fstat
+  0.00    0.000007           7         1         1 access
+  0.00    0.000003           3         1           brk
+  0.00    0.000003           3         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00   39.101537              10000024         1 total
+
+The buffered version, tr2b, has fewer system calls, which is expected. 
+
+3b.
+strace -c ./tr2b a b < 5mb.txt
+% time     seconds  usecs/call     calls    errors syscall??ch
+------ ----------- ----------- --------- --------- ----------------
+  0.00    0.000000           0         2           read
+  0.00    0.000000           0         3           write
+  0.00    0.000000           0         2           open
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0         4           fstat
+  0.00    0.000000           0         9           mmap
+  0.00    0.000000           0         4           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           brk
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00    0.000000                    31         1 total
+
+strace -c ./tr2u a b < 5mb.txt
+% time     seconds  usecs/call     calls    errors syscall
+------ ----------- ----------- --------- --------- ----------------
+ 56.91   24.481473           5   5000000           write
+ 43.09   18.536926           4   5000002           read
+  0.00    0.000000           0         2           open
+  0.00    0.000000           0         2           close
+  0.00    0.000000           0         2           fstat
+  0.00    0.000000           0         7           mmap
+  0.00    0.000000           0         4           mprotect
+  0.00    0.000000           0         1           munmap
+  0.00    0.000000           0         1           brk
+  0.00    0.000000           0         1         1 access
+  0.00    0.000000           0         1           execve
+  0.00    0.000000           0         1           arch_prctl
+------ ----------- ----------- --------- --------- ----------------
+100.00   43.018399              10000024         1 total
+
+The buffered version, tr2b, has fewer system calls, which is expected. 
+
+4.
+time ./tr2b a b < 5mb.txt
+real    0m0.002s
+user    0m0.000s
+sys     0m0.001s
+
+time ./tr2u a b < 5mb.txt
+real    0m4.971s
+user    0m0.400s
+sys     0m4.531s
+
+The buffered version, tr2b, is faster, which is expected. 
+
+---
