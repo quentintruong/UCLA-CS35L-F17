@@ -1,0 +1,49 @@
+Name: Quentin Truong
+Assignment 6. Multithreaded performance
+
+---
+
+echo $PATH
+export PATH=/usr/local/cs/bin/sort:$PATH
+echo $PATH
+This allow us to verify that /usr/local/cs/bin/sort is not on the path, then adds it to the path, then verifies that it has been added to the path.
+
+od -An -f -N 40MB < /dev/urandom | tr -s [:space:] '\n' > floats.txt
+This generates atleast 10,000,000 floats, one float per line, with no spaces.
+
+time -p sort -g floats.txt > /dev/null
+This returns the time it takes to sort the floats.
+
+time -p sort -g --parallel=1 floats.txt > /dev/null
+This returns the time it takes to sort the floats with 1 thread. Change the 1 to a 2 to use 2 threads, and so on for 4, 8. 
+
+-BENCHMARKS-
+
+no --parallel
+    real 21.98
+    user 117.92
+    sys 0.48
+
+--parallel=1
+    real 109.09
+    user 108.89
+    sys 0.19
+
+--parallel=2
+    real 56.54
+    user 107.28
+    sys 0.28
+
+--parallel=4
+    real 34.64
+    user 115.12
+    sys 0.38
+
+--parallel=8
+    real 21.81
+    user 118.09
+    sys 0.45
+
+-END_BENCHMARKS-
+
+---

@@ -1,0 +1,81 @@
+Name: Quentin Truong
+Assignment 7. SSH setup and use in applications
+
+---
+
+My partner was Edward Chu who was acting as the client.
+I acted as the server.
+
+Install appropriate drivers for Seeed BeagleBone Green Wireless
+
+Connect to the wifi that the BeagleBone creates
+
+sudo connmanctl
+connmanctl> enable wifi
+connmanctl> scan wifi
+connmanctl> services
+connmanctl> agent on
+connmanctl> connect wifi_b827eb23a6a6_7174706965_managed_psk
+connmanctl> quit
+This finds and connects to a wifi. 
+The UCLA wifi is broken and may not be used for this assignment.
+I used my personal mobile hotspot as wifi
+
+sudo apt-get update
+sudo apt-get install xauth
+This updates apt-get and installs xauth for ssh connections
+
+sudo apt-get install firefox-esr-l10n-en-gb
+sudo apt-get install xterm
+This installs firefox and xterm for port forwarding testing
+
+dpkg --get-selections | grep openssh
+This verifies that openssh is installed
+
+ifconfig wlan0
+This allows us to find the ip addresses on the wifi
+
+Server:
+ssh-keygen
+This generates public and private keys
+
+sudo useradd -d /home/edward -m edward
+sudo passwd edward
+This creates an account
+
+cd /home/edward
+sudo mkdir .ssh
+sudo chown -R edward .ssh
+sudo chmod 700 .ssh
+This creates an ssh directory to allow the client to ssh.
+
+Client:
+ssh edward@172.20.10.9
+This allows the client to ssh if the password is entered correctly
+
+ssh-keygen
+This generates the public and private keypair
+
+ssh-copy-id -i edward@172.20.10.9
+This adds the client public key to the server for key-based authentication
+
+ssh-add
+This allows the client to avoid typing his/her password everytime
+
+ssh edward@172.20.10.9
+This verifies that the password does not need to be typed
+
+
+ssh -X edward@172.20.10.9
+This iniates an SSH session with session forwarding. 
+
+xterm
+This launches an xterm window which may be used as a terminal
+
+ls -al
+touch qtqtqt.txt
+ls
+This proves that basic commands may be used in this new windows
+All commands behave as expected.
+
+---

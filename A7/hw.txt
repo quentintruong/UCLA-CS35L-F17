@@ -1,0 +1,29 @@
+Name: Quentin Truong
+Assignment 7. SSH setup and use in applications
+
+---
+
+1.0
+The network would be secure. 
+This is because the bytes are encrypted using a public key and may only be decrypted using the correct private key.
+They would not have the private key by snooping.
+
+1.1
+The network would be secure. 
+This is because they do not have access to the private key by simply recording the keystrokes. 
+They need the private key to decrypt the data.
+
+1.2
+The network would not be secure.
+This is because they would have access to the private key. 
+This would allow them to decrypt the data.
+
+
+2
+gpg --verify only verifies that the digital signatures match. 
+Someone may intercept and send their own details or create new signatures.
+We may solve this by using certificate authorities. 
+The CA will provide the public key and confidence in it's origin.
+This allows us to trust that the signature is who we think it is.
+
+---
