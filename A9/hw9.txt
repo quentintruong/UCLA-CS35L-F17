@@ -5,3 +5,85 @@ Assignment 9. Change management
 
 Homework: Verifying and publishing a backported change
 
+git clone https://git.savannah.gnu.org/git/diffutils.git
+This gets another diffutils
+
+git checkout -b 'quote' 'v3.0'
+This checkouts a v3.0 into branch named quote
+
+[quentin@lnxsrv07 ~/Desktop/diffutils]$ patch -p1 < ../quote-3.0-patch.txt 
+patching file src/cmp.c
+patching file src/diff.c
+patching file src/diff3.c
+patching file src/dir.c
+patching file src/sdiff.c
+patching file src/util.c
+This shows that the patch works
+
+emacs
+C-x 4 a
+Type something meaningful as the changelog entry
+C-x C-c
+
+git commit -aF ChangeLog
+This commits the changelog entry
+
+git format-patch -1 --stdout > formatted-patch.txt
+
+Partner is Edward Chu
+
+git checkout -b 'partner' 'v3.0'
+This checkouts a new branch named partner that is version v3.0
+
+git am formatted-patch-ec.txt
+This applies the patch
+
+export PATH=/usr/local/cs/bin:$PATH
+./bootstrap
+curl http://web.cs.ucla.edu/classes/fall17/cs35L/assign/diffutils-gets.diff > diffutils-gets.diff
+patch -p1 < diffutils-gets.diff
+./configure
+make
+[quentin@lnxsrv07 ~/Desktop/diffutils/src]$ make clean
+test -z "cmp diff diff3 sdiff" || rm -f cmp diff diff3 sdiff
+rm -f *.o
+test -z "paths.h paths.ht" || rm -f paths.h paths.ht
+
+[quentin@lnxsrv07 ~/Desktop/diffutils/src]$ ./diff . -
+./diff: cannot compare '-' to a directory
+This shows that the patch work
+
+make distdir
+cd diffutils-3.0.1-cfbf
+[quentin@lnxsrv07 ~/Desktop/diffutils/diffutils-3.0.1-cfbf]$ git log
+commit cfbffd801b4c084e6fc852dec35707b9f1d66ec5 (HEAD -> partner)
+Author: Edward Tsun Man Chu <chue@lnxsrv09.seas.ucla.edu>
+Date:   Thu Nov 30 21:22:09 2017 -0800
+
+    2017-11-30 Edward Tsun Man Chu <chue@lnxsrv09.seas.ucla.edu>
+    
+        maint: quote 'like this' or "like this", not `like this'
+    
+        This is in response to a recent change in the GNU coding standards,
+        which now suggest quoting 'like this' or "like this", instead of
+        `like this' or ``like this''.
+    
+            * src/cmp.c:
+            * src/diff.c:
+            * src/diff3.c:
+            * src/dir.c:
+            * src/sdiff.c:
+            * src/util.c:
+            Quote 'like this' in output.
+We see that the changelog entry worked.
+
+git clone https://git.savannah.gnu.org/git/emacs.git
+export PATH=/usr/local/cs/bin:$PATH
+
+ssh -Y <username>
+This is because we need X11
+
+gitk
+This allows us to see the window
+
+---

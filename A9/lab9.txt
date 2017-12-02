@@ -270,10 +270,17 @@ We see that diff does the correct thing
 [quentin@lnxsrv07 ~/Desktop/diffutils-3.0-patch/src]$ ./diff . -
 ./diff: cannot compare '-' to a directory
 
-I ./bootstrap but find an issue with help2man.
+./bootstrap 
+I find an issue with help2man.
 I solve this issue by adding export PATH=/usr/local/cs/bin:$PATH
+
+curl http://web.cs.ucla.edu/classes/fall17/cs35L/assign/diffutils-gets.diff > diffutils-gets.diff
+patch -p1 < diffutils-gets.diff
+I patch because the program is broken
+
 ./configure
 make
+These commands build the program
 
 The files quote-3.0-test.txt and quote-3.0-patch.txt are not identical, but the differences are innocuous and expected
 

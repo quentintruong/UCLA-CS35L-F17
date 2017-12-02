@@ -1,0 +1,18 @@
+Name: Quentin Truong
+Assignment 9. Change management
+
+---
+
+Homework: Verifying and publishing a backported change
+
+upper-left: hierarchy tree of commits and relationships between branches; commit hashes is right below it
+
+upper-middle: name and email of authors for the selected commit
+
+upper-right: corresponding date for selected commit
+
+lower-left: changelog of commit; changes shown in diff form
+
+lower-right: files changed by selected commit
+
+---
